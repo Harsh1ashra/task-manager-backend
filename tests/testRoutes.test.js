@@ -6,9 +6,13 @@ const Task = require("../models/Task");
 jest.setTimeout(30000);
 
 beforeAll(async () => {
-  await mongoose.connect(
-    process.env.MONGO_URI_TEST || "mongodb://127.0.0.1:27017/todoDB_test"
-  );
+  if (!process.env.MONGO_URI_TEST) {
+    throw new Error("MONGO_URI_TEST not defined");
+  }
+  await mongoose.connect(process.env.MONGO_URI_TEST);
+  // await mongoose.connect(
+  //   process.env.MONGO_URI_TEST || "mongodb://127.0.0.1:27017/todoDB_test"
+  // );
 });
 
 afterEach(async () => {
