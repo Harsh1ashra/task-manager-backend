@@ -49,7 +49,7 @@ const taskRoutes = require("./routes/taskRoutes");
 
 
 
-p.use(express.json());
+app.use(express.json());
 app.use("/tasks", taskRoutes);
 
 app.use(cors({
