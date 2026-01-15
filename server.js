@@ -1,66 +1,20 @@
-
-
-// if (process.env.NODE_ENV !== "test") {
-//   mongoose
-//     .connect(process.env.MONGO_URI)
-//     .then(() => console.log("MongoDB connected"))
-//     .catch(err => console.error(err));
-
-//   const PORT = process.env.PORT || 5000;
-//   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// }
-
-
-
-
-// const connectDB = async () => {
-//   try {
-//     if (!process.env.MONGO_URI) {
-//       throw new Error("MONGO_URI not defined");
-//     }
-
-//     await mongoose.connect(process.env.MONGO_URI);
-//     console.log("MongoDB connected");
-//   } catch (err) {
-//     console.error("MongoDB connection failed:", err.message);
-//     process.exit(1);
-//   }
-// };
-
-// if (process.env.NODE_ENV !== "test") {
-//   connectDB();
-// }
-
-// module.exports = app;
-
-
-
-
-
-
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-const taskRoutes = require("./routes/taskRoutes");
+const app = express(); 
 
-
-
-
-app.use(express.json());
-app.use("/tasks", taskRoutes);
-
+// Middleware
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"]
 }));
+app.use(express.json());
 
-
-
-
-
+// Routes (import ONCE)
+const taskRoutes = require("./routes/taskRoutes");
+app.use("/tasks", taskRoutes);
 
 const PORT = process.env.PORT || 5000;
 
@@ -68,14 +22,11 @@ if (!process.env.MONGO_URI) {
   throw new Error("MONGO_URI is not defined");
 }
 
+// Database + server start
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
-
-    
-    const taskRoutes = require("./routes/tasks");
-    app.use("/tasks", taskRoutes);
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
