@@ -1,21 +1,3 @@
-// const express = require("express");
-// const mongoose = require("mongoose");
-// const cors = require("cors");
-// require("dotenv").config();
-
-// const taskRoutes = require("./routes/taskRoutes");
-
-// const app = express();
-
-// app.use(cors());
-// app.use(express.json());
-// app.use("/tasks", taskRoutes);
-
-// app.use(cors({
-//   origin: "*",
-//   methods: ["GET", "POST", "PUT", "DELETE"]
-// }));
-
 
 
 // if (process.env.NODE_ENV !== "test") {
@@ -52,6 +34,26 @@
 // module.exports = app;
 
 
+
+
+
+
+
+const cors = require("cors");
+require("dotenv").config();
+
+const taskRoutes = require("./routes/taskRoutes");
+
+
+
+app.use(cors());
+app.use(express.json());
+app.use("/tasks", taskRoutes);
+
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"]
+}));
 
 
 const express = require("express");
